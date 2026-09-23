@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Forno da Vila | Pizzaria</title>
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Gradiente usado pela borda das pizzas desenhadas no script.js -->
+    <svg class="defs" width="0" height="0" aria-hidden="true">
+      <defs>
+        <radialGradient id="grad-borda">
+          <stop offset="84%" stop-color="#F2BD72" />
+          <stop offset="93%" stop-color="#E2A255" />
+          <stop offset="100%" stop-color="#B36D2C" />
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <!-- ===== TOPO ===== -->
+    <header class="topo">
+      <div class="container topo__conteudo">
+        <a href="#" class="marca">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M16 29 4 8a26 26 0 0 1 24 0Z" fill="#FFC94D" />
+            <path d="M4 8a26 26 0 0 1 24 0" fill="none" stroke="#E2A255" stroke-width="4" stroke-linecap="round" />
+            <circle cx="14" cy="14" r="2.4" fill="#E0402A" />
+            <circle cx="19.5" cy="17.5" r="2" fill="#E0402A" />
+            <circle cx="14.5" cy="21.5" r="1.6" fill="#E0402A" />
+          </svg>
+          Forno da Vila
+        </a>
+
+        <nav class="topo__nav" aria-label="Principal">
+          <a href="#cardapio">Cardápio</a>
+          <a href="#informacoes">Horários e entrega</a>
+        </nav>
+
+        <button type="button" id="abrir-sacola" class="botao-sacola">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+          Sacola
+          <span id="contador" class="contador">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== DESTAQUE ===== -->
+    <section class="hero">
+      <div class="container hero__conteudo">
+        <div class="hero__texto">
+          <p id="selo" class="selo"><span class="selo__ponto"></span><span id="selo-texto">Aberto agora</span></p>
+          <h1>Pizza de forno a lenha, quentinha na sua porta.</h1>
+          <p class="hero__descricao">
+            Massa de fermentação natural, ingredientes frescos e entrega em até
+            45 minutos em todo o bairro.
+          </p>
+          <a href="#cardapio" class="botao botao--primario botao--grande">Ver cardápio</a>
+
+          <ul class="hero__infos">
+            <li>
+              <span class="icone-redondo">
+                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+              </span>
+              <div><strong>40 a 45 min</strong><span>tempo médio de entrega</span></div>
+            </li>
+            <li>
+              <span class="icone-redondo">
+                <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18.5" cy="17.5" r="3.5" /><circle cx="5.5" cy="17.5" r="3.5" /><circle cx="15" cy="5" r="1" /><path d="M12 17.5V14l-3-3 4-3 2 3h2" /></svg>
+              </span>
+              <div><strong>Entrega grátis</strong><span>em pedidos acima de R$ 100</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero__arte" aria-hidden="true">
+          <div class="hero__tabua"></div>
+          <div id="hero-pizza" class="hero__pizza"></div>
+          <svg class="enfeite enfeite--folha1" viewBox="0 0 40 24"><path d="M2 12Q20-4 38 12 20 28 2 12Z" fill="#2F8A45" /><path d="M5 12h30" stroke="#1F6B33" stroke-width="1.2" /></svg>
+          <svg class="enfeite enfeite--folha2" viewBox="0 0 40 24"><path d="M2 12Q20-4 38 12 20 28 2 12Z" fill="#3A9A50" /><path d="M5 12h30" stroke="#1F6B33" stroke-width="1.2" /></svg>
+          <svg class="enfeite enfeite--tomate" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#D93A26" /><circle cx="20" cy="20" r="14" fill="#F0624A" /><circle cx="14" cy="17" r="2.2" fill="#FFD9A8" /><circle cx="25" cy="15" r="2.2" fill="#FFD9A8" /><circle cx="21" cy="26" r="2.2" fill="#FFD9A8" /></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CARDÁPIO ===== -->
+    <main id="cardapio" class="cardapio">
+      <div class="container">
+        <div class="cardapio__cabecalho">
+          <div>
+            <h2>Cardápio</h2>
+            <p>Escolha o tamanho, adicione à sacola e finalize quando quiser.</p>
+          </div>
+          <div id="filtros" class="filtros" role="group" aria-label="Filtrar cardápio">
+            <button type="button" data-filtro="todas">Tudo</button>
+            <button type="button" data-filtro="salgada">Salgadas</button>
+            <button type="button" data-filtro="doce">Doces</button>
+            <button type="button" data-filtro="bebida">Bebidas</button>
+          </div>
+        </div>
+
+        <!-- Os cards são gerados pelo script.js -->
+        <div id="lista-cardapio"></div>
+      </div>
+    </main>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer id="informacoes" class="rodape">
+      <div class="container rodape__grade">
+        <div>
+          <p class="marca">Forno da Vila</p>
+          <p class="rodape__texto">Pizzaria de bairro com forno a lenha desde 2014.</p>
+        </div>
+        <div>
+          <h3>Horário</h3>
+          <p>Terça a domingo<br />18h às 23h</p>
+        </div>
+        <div>
+          <h3>Entrega</h3>
+          <p>R$ 6,00 por pedido<br />Grátis acima de R$ 100</p>
+        </div>
+        <div>
+          <h3>Pagamento</h3>
+          <p>Pix, cartão ou dinheiro<br />na entrega</p>
+        </div>
+      </div>
+      <p class="container rodape__nota">Projeto acadêmico. Os pedidos feitos aqui não são enviados de verdade.</p>
+    </footer>
+
+    <!-- ===== SACOLA (painel lateral) ===== -->
+    <dialog id="gaveta" class="gaveta" aria-labelledby="gaveta-titulo">
+      <div class="gaveta__topo">
+        <button type="button" id="voltar" class="botao-icone" aria-label="Voltar para a sacola" hidden>
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+        </button>
+        <h2 id="gaveta-titulo">Sua sacola</h2>
+        <button type="button" id="fechar-gaveta" class="botao-icone" aria-label="Fechar sacola">
+          <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+
+      <!-- Etapa 1: itens -->
+      <div id="etapa-sacola" class="gaveta__etapa">
+        <div class="gaveta__rolagem">
+          <div id="sacola-vazia" class="sacola-vazia">
+            <div id="pizza-vazia" class="sacola-vazia__pizza"></div>
+            <p class="sacola-vazia__titulo">Sua sacola está vazia</p>
+            <p>Escolha uma pizza no cardápio para começar.</p>
+            <button type="button" id="ir-cardapio" class="botao botao--secundario">Ver cardápio</button>
+          </div>
+          <ul id="itens-pedido" class="itens-pedido"></ul>
+        </div>
+
+        <div id="rodape-sacola" class="gaveta__rodape">
+          <div id="frete" class="frete">
+            <p id="aviso-entrega"></p>
+            <div class="frete__trilho"><div id="frete-barra" class="frete__barra"></div></div>
+          </div>
+          <dl class="resumo">
+            <div><dt>Subtotal</dt><dd id="subtotal">R$ 0,00</dd></div>
+            <div><dt>Entrega</dt><dd id="taxa">R$ 0,00</dd></div>
+            <div class="resumo__total"><dt>Total</dt><dd id="total">R$ 0,00</dd></div>
+          </dl>
+          <button type="button" id="continuar" class="botao botao--primario botao--largo">Continuar</button>
+        </div>
+      </div>
+
+      <!-- Etapa 2: dados do cliente -->
+      <form id="form-pedido" class="gaveta__etapa" novalidate hidden>
+        <div class="gaveta__rolagem">
+          <div class="campos">
+            <fieldset class="grupo-opcoes">
+              <legend>Como você quer receber?</legend>
+              <div class="opcoes">
+                <label class="opcao">
+                  <input type="radio" name="tipo" value="entrega" checked />
+                  <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18.5" cy="17.5" r="3.5" /><circle cx="5.5" cy="17.5" r="3.5" /><circle cx="15" cy="5" r="1" /><path d="M12 17.5V14l-3-3 4-3 2 3h2" /></svg>
+                  Entrega
+                </label>
+                <label class="opcao">
+                  <input type="radio" name="tipo" value="retirada" />
+                  <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+                  Retirar no balcão
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="campo">
+              <label for="nome">Nome</label>
+              <input id="nome" name="nome" autocomplete="name" />
+            </div>
+
+            <div class="campo">
+              <label for="telefone">Telefone</label>
+              <input id="telefone" name="telefone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(00) 00000-0000" />
+            </div>
+
+            <div id="campo-endereco" class="campo">
+              <label for="endereco">Endereço de entrega</label>
+              <input id="endereco" name="endereco" autocomplete="street-address" placeholder="Rua, número e bairro" />
+            </div>
+
+            <fieldset class="grupo-opcoes">
+              <legend>Pagamento</legend>
+              <div class="opcoes opcoes--simples">
+                <label class="opcao"><input type="radio" name="pagamento" value="pix" checked /> Pix</label>
+                <label class="opcao"><input type="radio" name="pagamento" value="cartao" /> Cartão</label>
+                <label class="opcao"><input type="radio" name="pagamento" value="dinheiro" /> Dinheiro</label>
+              </div>
+            </fieldset>
+
+            <div id="campo-troco" class="campo" hidden>
+              <label for="troco">Troco para quanto? (opcional)</label>
+              <input id="troco" name="troco" type="number" min="0" step="0.01" placeholder="Ex.: 100" />
+            </div>
+
+            <div class="campo">
+              <label for="observacao">Observação (opcional)</label>
+              <textarea id="observacao" name="observacao" rows="2" placeholder="Ex.: sem cebola, campainha quebrada"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="gaveta__rodape">
+          <p id="erro" class="erro" role="alert"></p>
+          <div class="resumo-curto">
+            <div>
+              <span>Total</span>
+              <small id="total-detalhe"></small>
+            </div>
+            <strong id="total-form">R$ 0,00</strong>
+          </div>
+          <button type="submit" class="botao botao--primario botao--largo">Confirmar pedido</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- ===== CONFIRMAÇÃO ===== -->
+    <dialog id="confirmacao" class="confirmacao" aria-labelledby="confirmacao-titulo">
+      <div class="confirmacao__icone">
+        <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+      </div>
+      <h2 id="confirmacao-titulo">Pedido confirmado</h2>
+      <p id="confirmacao-texto" class="confirmacao__texto"></p>
+      <div class="confirmacao__cupom">
+        <ul id="confirmacao-itens" class="confirmacao__itens"></ul>
+        <div id="confirmacao-detalhes" class="confirmacao__detalhes"></div>
+        <p class="confirmacao__total"><span>Total</span><span id="confirmacao-total"></span></p>
+      </div>
+      <button type="button" id="novo-pedido" class="botao botao--primario botao--largo">Fazer novo pedido</button>
+    </dialog>
+
+    <!-- Barra fixa da sacola (celular) -->
+    <button type="button" id="barra-sacola" class="barra-sacola" hidden>
+      <span id="barra-qtd" class="barra-sacola__qtd">0</span>
+      <span>Ver sacola</span>
+      <span id="barra-total" class="barra-sacola__total">R$ 0,00</span>
+    </button>
+
+    <!-- Aviso rápido ao adicionar item -->
+    <div id="toast" class="toast" role="status">
+      <span id="toast-texto"></span>
+      <button type="button" id="toast-ver">Ver sacola</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
